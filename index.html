@@ -1,0 +1,96 @@
+<head>
+  <meta charset="UTF-8">
+  <title>Система моніторингу</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #eef2f5;
+      color: #333;
+      padding: 40px;
+      margin: 0;
+    }
+    h1 {
+      font-size: 32px;
+      color: #2c3e50;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    h2 {
+      margin-top: 60px;
+      font-size: 24px;
+      color: #34495e;
+    }
+    .chart-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      max-width: 800px;
+      margin: 30px auto;
+    }
+    canvas {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Система моніторингу навколишнього середовища</h1>
+
+  <div class="chart-container">
+    <h2>Температура</h2>
+    <canvas id="temperatureChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h2>Вологість</h2>
+    <canvas id="humidityChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h2>CO₂ (ppm)</h2>
+    <canvas id="co2Chart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h2>Освітленість (Lux)</h2>
+    <canvas id="lightChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h2>Рух (події)</h2>
+    <canvas id="motionChart"></canvas>
+  </div>
+<script>
+  const labels = ['10:00', '11:00', '12:00', '13:00', '14:00'];
+
+  const createChart = (ctxId, label, data, color) => {
+    new Chart(document.getElementById(ctxId), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: label,
+          data: data,
+          borderColor: color,
+          backgroundColor: color + '33',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  };
+
+  createChart('temperatureChart', 'Температура (°C)', [20.5, 21.2, 22.8, 22.1, 21.7], 'red');
+  createChart('humidityChart', 'Вологість (%)', [55, 58, 60, 57, 56], 'blue');
+  createChart('co2Chart', 'CO₂ (ppm)', [400, 420, 450, 430, 410], 'green');
+  createChart('lightChart', 'Освітленість (Lux)', [300, 350, 400, 370, 360], 'orange');
+  createChart('motionChart', 'Рух (події)', [0, 2, 3, 1, 0], 'purple');
+</script>
+</body>
